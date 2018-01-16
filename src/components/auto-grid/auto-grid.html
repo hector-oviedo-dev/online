@@ -4,6 +4,9 @@
     <div class="col" *ngFor="let title of _data._titles;">title</div>
   </div>
   <div class="row" *ngFor="let row of _data.row">
-    <div class="col" *ngFor="let col of row.col">{{col.label}}</div>
+    <div class="col" *ngFor="let col of row.col">
+      <label *ngIf="col.type=='text'" for="">{{col.label}}</label>
+      <button  *ngIf="col.type=='button'"  ion-button>{{_label_cancel}}</button>
+    </div>
   </div>
 </ion-content>

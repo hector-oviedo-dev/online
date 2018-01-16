@@ -43,7 +43,7 @@ export class DynamicPage {
 
     this.menus = [
       {
-        label:"Usuarios",
+        label:"TEST Online",
         action:"cascade",
         parent:1,
         cascadeshowing:false,
@@ -51,21 +51,21 @@ export class DynamicPage {
         parentchild:0
       },
       {
-        label:"Monedas",
+        label:"Formulario",
         action:"obtenerControlesPantalla",
         show:false,
         parentchild:1
       },
       {
-        label:"Eliminar",
-        action:"removeuser",
+        label:"Grilla",
+        action:"obtenerGrillaPantalla",
         show:false,
         parentchild:1
       },
 
 
       {
-        label:"SubUsuarios",
+        label:"TEST Menu Cascade",
         action:"cascade",
         parent:2,
         cascadeshowing:false,
@@ -73,28 +73,28 @@ export class DynamicPage {
         parentchild:1
       },
       {
-        label:"SubUsuarios 1",
-        action:"obtenerControlesPantalla",
+        label:"Sub Menu 1",
+        action:"obtenerGrillaPantalla",
         show:false,
         parentchild:2
       },
       {
-        label:"SubUsuarios 2",
-        action:"removeuser",
+        label:"Sub Menu 2",
+        action:"obtenerGrillaPantalla",
         show:false,
         parentchild:2
       },
 
 
       {
-        label:"Online",
-        action:"online",
+        label:"Otro Menu",
+        action:"obtenerGrillaPantalla",
         show:true,
         parentchild:0
       },
       {
-        label:"Player Tracking",
-        action:"playertracking",
+        label:"Otro Menu 2",
+        action:"obtenerGrillaPantalla",
         show:true,
         parentchild:0
       }
