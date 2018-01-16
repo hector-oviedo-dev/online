@@ -67,7 +67,10 @@ var ContainerPage = (function () {
     };
     ContainerPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.services.doGet(this.service, "/mnd").subscribe(function (res) { _this.onServiceResult(res); });
+        this.services.doGet(this.service, "").subscribe(function (data) { _this.onServiceResult(data); }, function (err) {
+            var data = { "MESSAGE": "404 Server Address" };
+            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__pages_error_error__["a" /* ErrorPage */], data);
+        });
         /*
         let form = {
          type:"form",
@@ -247,15 +250,16 @@ var ContainerPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
     ], ContainerPage.prototype, "container", void 0);
     ContainerPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-container',template:/*ion-inline-start:"D:\git\online\src\pages\container\container.html"*/'<ion-content scrollX="true">\n  <ng-template #container>\n  </ng-template>\n</ion-content>\n'/*ion-inline-end:"D:\git\online\src\pages\container\container.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_3__providers_services_services__["a" /* ServicesProvider */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_services_services__["a" /* ServicesProvider */]) === "function" && _e || Object])
     ], ContainerPage);
     return ContainerPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=container.js.map
@@ -328,7 +332,7 @@ var DynamicPage = (function () {
             },
             {
                 label: "Formulario",
-                action: "obtenerControlesPantalla",
+                action: "obtenerControlesPantalla/mnd",
                 show: false,
                 parentchild: 1
             },
@@ -1669,9 +1673,10 @@ var ServicesProvider = (function () {
     };
     ServicesProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ServicesProvider);
     return ServicesProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=services.js.map

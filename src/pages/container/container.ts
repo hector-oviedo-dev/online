@@ -55,7 +55,13 @@ export class ContainerPage {
   }
 
   ionViewDidLoad() {
-    this.services.doGet(this.service,"/mnd").subscribe(res => { this.onServiceResult(res); });
+    this.services.doGet(this.service,"").subscribe(
+      data => { this.onServiceResult(data); },
+      err => {
+        let data = { "MESSAGE":"404 Server Address" }
+        this.navCtrl.push(ErrorPage, data);
+      }
+    );
     /*
     let form = {
      type:"form",

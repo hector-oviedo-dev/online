@@ -52,7 +52,7 @@ export class DynamicPage {
       },
       {
         label:"Formulario",
-        action:"obtenerControlesPantalla",
+        action:"obtenerControlesPantalla/mnd",
         show:false,
         parentchild:1
       },
