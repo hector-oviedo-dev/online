@@ -1,0 +1,151 @@
+{
+  "_args": [
+    [
+      "@progress/kendo-theme-default",
+      "D:\\git\\online"
+    ]
+  ],
+  "_from": "@progress/kendo-theme-default@latest",
+  "_id": "@progress/kendo-theme-default@2.45.4",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/@progress/kendo-theme-default",
+  "_nodeVersion": "6.12.2",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/kendo-theme-default-2.45.4.tgz_1513848298904_0.05870999931357801"
+  },
+  "_npmUser": {
+    "email": "npm@progress.com",
+    "name": "progress"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "@progress/kendo-theme-default",
+    "raw": "@progress/kendo-theme-default",
+    "rawSpec": "",
+    "scope": "@progress",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@progress/kendo-theme-default/-/kendo-theme-default-2.45.4.tgz",
+  "_shasum": "ef687db92dbc6d795464c5faaa2a7124255ce090",
+  "_shrinkwrap": null,
+  "_spec": "@progress/kendo-theme-default",
+  "_where": "D:\\git\\online",
+  "author": {
+    "name": "Progress"
+  },
+  "bugs": {
+    "url": "https://github.com/telerik/kendo-theme-default/issues"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "commit-msg": "validate-commit-msg",
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    },
+    "validate-commit-msg": {
+      "maxSubjectLength": 100,
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert"
+      ],
+      "warnOnFail": false
+    }
+  },
+  "dependencies": {},
+  "description": "SASS resources for the default Kendo UI theme",
+  "devDependencies": {
+    "@telerik/kendo-common-tasks": "^3.0.0",
+    "@telerik/semantic-prerelease": "^1.0.0",
+    "bootstrap": "4.0.0-beta.2",
+    "cz-conventional-changelog": "^1.1.5",
+    "editorconfig-tools": "^0.1.1",
+    "ghooks": "^1.0.3",
+    "glob": "^7.0.5",
+    "handlebars": "^4.0.10",
+    "jquery": "^1.9.1",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-qunit": "^1.2.1",
+    "mime": "^1.3.4",
+    "qunitjs": "^2.4.1",
+    "sass-lint": "^1.7.0",
+    "sassdoc": "^2.1.20",
+    "semantic-release": "^6.3.6",
+    "validate-commit-msg": "^1.1.1",
+    "webpack": "^1.13.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "ef687db92dbc6d795464c5faaa2a7124255ce090",
+    "tarball": "https://registry.npmjs.org/@progress/kendo-theme-default/-/kendo-theme-default-2.45.4.tgz"
+  },
+  "gitHead": "c74ed18132cc020b501a5311571694a6209b0707",
+  "homepage": "https://github.com/telerik/kendo-theme-default#readme",
+  "keywords": [
+    "Kendo UI",
+    "Theme"
+  ],
+  "license": "Apache-2.0",
+  "main": "dist/all.css",
+  "maintainers": [
+    {
+      "email": "npm@progress.com",
+      "name": "progress"
+    }
+  ],
+  "name": "@progress/kendo-theme-default",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "release": {
+    "analyzeCommits": "@telerik/semantic-prerelease/analyzeCommits",
+    "branchTags": {
+      "develop": "dev"
+    },
+    "debug": false,
+    "fallbackTags": {
+      "dev": "latest"
+    },
+    "generateNotes": "@telerik/semantic-prerelease/generateNotes",
+    "getLastRelease": "@telerik/semantic-prerelease/getLastRelease",
+    "verifyConditions": "@telerik/semantic-prerelease/verifyConditions",
+    "verifyRelease": "@telerik/semantic-prerelease/verifyRelease"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/telerik/kendo-theme-default.git"
+  },
+  "sass": "scss/all.scss",
+  "scripts": {
+    "api": "sassdoc ./scss/",
+    "api-check": "npm run api && git diff --exit-code --quiet -- docs/ || (echo -e '\\033[0;31mERROR: API docs are out of date' && exit 1)",
+    "build": "webpack --optimize-minimize --bail",
+    "embed-assets": "node build/embed-assets.js",
+    "karma-single": "karma start --no-auto-watch --single-run --browsers ChromeHeadless",
+    "karma-watch": "karma start --auto-watch --no-single-run",
+    "lint": "sass-lint -v -c ./sass-lint.yml",
+    "semantic-release": "semantic-release pre && semantic-prerelease publish && semantic-release post",
+    "start": "webpack-dev-server",
+    "test": "npm run lint && npm run build && npm run api-check && npm run twbs-compat && npm run karma-single",
+    "twbs-compat": "webpack --env.twbs-compat --bail",
+    "watch": "webpack --watch",
+    "watch-test": "npm run karma-watch"
+  },
+  "version": "2.45.4"
+}

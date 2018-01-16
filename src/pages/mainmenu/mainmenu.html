@@ -1,0 +1,32 @@
+<ion-content>
+
+
+ <!-- this fab is placed at bottom right -->
+ <ion-fab center middle>
+   <button ion-fab>Menu Principal</button>
+
+   <ion-fab-list side="right">
+     <button ion-fab (click)="onOnline()">Online</button>
+   </ion-fab-list>
+
+   <ion-fab-list side="left">
+       <button ion-fab (click)="onOnline()">Usuarios</button>
+   </ion-fab-list>
+
+   <ion-fab-list side="top">
+     <button ion-fab>Player Tracking</button>
+   </ion-fab-list>
+
+   <ion-fab-list side="bottom">
+     <button ion-fab>Caja</button>
+   </ion-fab-list>
+
+
+ </ion-fab>
+ <ion-fab bottom right>
+   <button ion-fab side="left" (click)="onLogout()">Cerrar Sesion</button>
+</ion-fab>
+
+
+
+</ion-content>

@@ -1,0 +1,25 @@
+<!-- Generated template for the AutoInputComponent component -->
+<ion-grid [hidden]="_hidden" [ngClass]="[(_value)?'formBoxValid':'formBoxInalid']">
+  <ion-row>
+    <ion-col *ngIf="_label != undefined" class="formTextLabel">
+      <ion-label>{{_label}}
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-select [(ngModel)]="_value">
+        <ion-option *ngFor="let option of _options" [value]="option.value" [disabled]="!_enabled">{{option.label}}</ion-option>
+      </ion-select>
+    </ion-col>
+    <ion-col>
+      <button ion-fab [(tooltip)]="_txt_help" positionV="bottom" arrow class="formHelpButton" float-right>?</button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-label color="danger" *ngIf="(_value && _txt_required != undefined)" stacked  class="formErrorText">* {{_txt_required}}</ion-label>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<br>

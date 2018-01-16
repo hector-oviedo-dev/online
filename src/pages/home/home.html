@@ -1,17 +1,41 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<!-- Spinner -->
+<div class="spinContainer" [hidden]="!SPINNER">
+  <div class="spinBG"></div>
+  <div class="spin">
+    <ion-spinner name="bubbles" text-center></ion-spinner>
+  </div>
+</div>
+  <!-- Spinner -->
+<ion-content class="loginBox" padding>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <form [formGroup]="loginForm">
+   <ion-grid>
+
+     <ion-row>
+       <ion-col>
+       <ion-input placeholder="Usuario" type="text" id="user" formControlName="user"></ion-input>
+     </ion-col>
+     </ion-row>
+
+     <ion-row>
+       <ion-col>
+       <ion-input placeholder="Password" type="password" id="password" formControlName="password"></ion-input>
+     </ion-col>
+     </ion-row>
+
+     <ion-row>
+       <ion-col>
+       <button ion-button block (click)="onClick()" [disabled]="!loginForm.controls['user'].valid || !loginForm.controls['password'].valid">INGRESAR</button>
+     </ion-col>
+     </ion-row>
+
+     <ion-row>
+       <ion-col>
+       <button kendoButton (click)="onClick()" [primary]="true">My Kendo UI Button</button>
+
+     </ion-col>
+     </ion-row>
+
+   </ion-grid>
+   </form>
 </ion-content>

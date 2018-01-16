@@ -14,3 +14,36 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+@import "kendo-theme-default/scss/all";
+
+
+// --------------------------------------------------
+// Forms
+.formBoxValid {
+  border-radius: 5px;
+  border: 1px solid #488aff;
+}
+.formBoxInalid {
+  border-radius: 5px;
+  border: 1px solid #f53d3d;
+}
+.formTextValid {
+  border: 1px solid #488aff;
+}
+.formTextInalid {
+  border: 1px solid #f53d3d;
+}
+.formHelpButton {
+  right: 0;
+  width:25px;
+  height:25px;
+}
+
+.formTitleText {
+
+}
+.formErrorText {
+
+}

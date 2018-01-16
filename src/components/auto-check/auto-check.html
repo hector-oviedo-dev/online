@@ -1,0 +1,15 @@
+<!-- Generated template for the AutoInputComponent component -->
+<ion-grid [hidden]="_hidden" class="formBoxValid">
+  <ion-row>
+    <ion-col class="formTextLabel"  width-100>
+      <ion-item>
+        <ion-label *ngIf="_label != undefined">{{_label}}</ion-label>
+        <ion-checkbox [(ngModel)]="_value" [disabled]="!_enabled"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <button ion-fab [(tooltip)]="_txt_help" positionV="bottom" arrow class="formHelpButton" float-right>?</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<br>

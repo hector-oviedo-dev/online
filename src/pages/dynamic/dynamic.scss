@@ -1,0 +1,35 @@
+page-dynamic {
+
+}
+#sidenav {
+  ion-item-group[submenu] {
+    overflow: hidden;
+    display: block;
+    height: 0;
+    transition: height .3s linear;
+    &.visible {
+        height: inherit;
+        // this is just sample value, calculate how much space you need for your menu items
+    }
+  }
+}
+ion-menu [submenu] {
+  display: block;
+  padding-left: 25px;
+  overflow: hidden;
+  max-height: 0;
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform .1s linear, max-height 0s .1s linear;
+  &.visible {
+    max-height: 9999px;
+    transform: scaleY(1);
+    transition: transform .1s linear, max-height 0s linear;
+  }
+}
+.cascadeChild {
+  //background-color: #333333
+}
+.cascadeParent {
+  background-color: #cccccc
+}

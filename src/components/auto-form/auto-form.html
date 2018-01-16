@@ -1,0 +1,32 @@
+<form [formGroup]="complexForm">
+<ion-grid>
+
+  <ion-row>
+  <ion-col>
+    <br>
+    <ion-header>
+
+        <ion-title>{{_label_title}}</ion-title>
+        <br>
+
+    </ion-header>
+    <br>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col>
+    <ng-template #container>
+    </ng-template>
+  </ion-col>
+  </ion-row>
+
+  <ion-row>
+  <ion-col>
+    <button ion-button [disabled]="complexForm.valid" (click)="submitClick()">{{_label_submit}}</button>
+  </ion-col>
+  <ion-col>
+    <button ion-button>{{_label_cancel}}</button>
+  </ion-col>
+  </ion-row>
+</ion-grid>
+</form>

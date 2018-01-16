@@ -1,0 +1,7 @@
+<!-- Generated template for the AutoInputComponent component -->
+<div [hidden]="_hidden">
+  <ion-item>
+      <ion-label color="primary" *ngIf="_label != 'null'" stacked>{{_label}}</ion-label>
+      <<ion-datetime [(displayFormat)]="_mask" [ngModel]="value" [disabled]="!_enabled"></ion-datetime>
+    </ion-item>
+</div>
