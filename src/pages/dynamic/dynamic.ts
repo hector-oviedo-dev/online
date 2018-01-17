@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , Events} from 'ionic-angular';
 import { ContainerPage } from '../../pages/container/container';
+import { ErrorPage } from '../../pages/error/error';
 import { ServicesProvider } from '../../providers/services/services';
 
 /**
@@ -21,8 +22,12 @@ export class DynamicPage {
   public menus = [];
 
   public title:string = "My Title";
-  constructor(public navCtrl: NavController, public navParams: NavParams,private services:ServicesProvider) {
 
+  public actual:string;
+
+  private events:Events;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private services:ServicesProvider) {
+    this.events = services.events;
   }
   public menuClick(i):void {
     if (this.menus[i].action == "cascade") {
@@ -31,8 +36,10 @@ export class DynamicPage {
 
       this.menuProcess(this.menus[i].parent,this.menus[i].cascadeshowing)
     } else {
-      this.services.setContent(this.menus[i].action)
       this.root = ContainerPage;
+      console.log("sending change event:" , this.menus[i].action)
+      this.events.publish("onChange", this.menus[i].action);
+      this.events.publish("onChangeError", this.menus[i].action);
     }
   }
   public menuProcess(parent, value) {
@@ -58,7 +65,7 @@ export class DynamicPage {
       },
       {
         label:"Grilla",
-        action:"obtenerGrillaPantalla",
+        action:"obtenerGrillaPantalla/mnd",
         show:false,
         parentchild:1
       },

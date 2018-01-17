@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { ServicesProvider } from '../../providers/services/services';
 
 /**
  * Generated class for the AutoGridComponent component.
@@ -11,14 +12,23 @@ import { Component } from '@angular/core';
   templateUrl: 'auto-grid.html'
 })
 export class AutoGridComponent {
+  @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
 
-    public _ID:string;
+  public components = [];
 
-    public _titles = [];
-    public _data = [];
+  public _label_title:string;
+  public _label_submit:string;
+  public _label_cancel:string;
 
-  constructor() {
-    
+  public _action:string;
+
+  public _titles = [];
+  public _rows = [];
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider) {
+
   }
+  public startProcess() {
 
+  }
 }

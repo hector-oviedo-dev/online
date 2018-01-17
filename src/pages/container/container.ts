@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { AutoFormComponent } from '../../components/auto-form/auto-form';
+import { AutoGridComponent } from '../../components/auto-grid/auto-grid';
 import { ServicesProvider } from '../../providers/services/services';
 import { ErrorPage } from '../../pages/error/error';
 
@@ -24,12 +25,21 @@ export class ContainerPage {
   public menus = [];
 
   public service:string;
+
+  private events:Events;
   constructor(public navCtrl: NavController, public navParams: NavParams, private componentFactoryResolver: ComponentFactoryResolver,private services:ServicesProvider) {
-    this.service = this.services.getContent();
+    this.events = services.events;
+    this.events.subscribe('onChange', (content) => { this.onChange(content); });
+  }
+  public onChange(content) {
+    this.service = content;
+    this.container.clear();
+    this.doStart();
+    //this.navCtrl.push(ContainerPage);
   }
   public onServiceResult(data) {
     let res = data.json;
-    console.log(JSON.stringify(res));
+
     if (res.sections.length) {
       for (var i = 0; res.sections.length > i; i++) {
 
@@ -39,22 +49,30 @@ export class ContainerPage {
             case "form":
               this.addFormComponent(res.sections[i]);
               break;
+            case "grid":
+              this.addGridComponent(res.sections[i]);
+              break;
           }
         } else {
           let data = { "MESSAGE":"Se esperaba en posicion" + i.toString() +" de 'sections' el objeto 'type'" }
-          this.navCtrl.push(ErrorPage, data);
+          //this.navCtrl.push(ErrorPage, data);
         }
       }
     } else {
       let data = { "MESSAGE":"Se esperaba array 'sections'" }
-      this.navCtrl.push(ErrorPage, data);
+      //this.navCtrl.push(ErrorPage, data);
     }
   }
   ngOnInit() {
 
   }
-
+  ionViewWillLeave() {
+    this.events.unsubscribe('onChange');
+  }
   ionViewDidLoad() {
+    if (this.service) this.doStart();
+  }
+  public doStart() {
     this.services.doGet(this.service,"").subscribe(
       data => { this.onServiceResult(data); },
       err => {
@@ -221,9 +239,79 @@ export class ContainerPage {
       label_cancel:"Cerrar"
     }
     };
+
+    let grid = {
+       type:"grid",
+       titles:[
+         {
+           label:"ROW 1 TITLE"
+         },
+         {
+          label:"ROW 2 TITLE"
+        },
+        {
+          label:"ROW 3 TITLE"
+        }
+      ],
+       rows:[
+       {
+         cols:[
+           {
+             type:"text",
+             label:"ROW 1 COL 1"
+           },
+           {
+             type:"text",
+             label:"ROW 1 COL 2"
+           },
+           {
+             type:"text",
+             label:"ROW 1 COL 3"
+           }
+         ]
+       },
+       {
+         cols:[
+           {
+             type:"text",
+             label:"ROW 2 COL 1"
+           },
+           {
+             type:"text",
+             label:"ROW 2 COL 2"
+           },
+           {
+             type:"text",
+             label:"ROW 2 COL 3"
+           }
+         ]
+       },
+       {
+         cols:[
+           {
+             type:"text",
+             label:"ROW 3 COL 1"
+           },
+           {
+             type:"text",
+             label:"ROW 3 COL 2"
+           },
+           {
+             type:"text",
+             label:"ROW 3 COL 3"
+           }
+         ]
+       }
+     ]
+    }
+
     let sections = [];
     sections.push(form);
+    sections.push(grid);
+
     let res = { json: { sections:sections}};
+
+
 
     this.onServiceResult(res);*/
   }
@@ -241,6 +329,44 @@ export class ContainerPage {
     (<AutoFormComponent>component.instance).values        = data.controls;
 
     (<AutoFormComponent>component.instance).startProcess();
+
+    this.components.push(component);
+  }
+  public addGridComponent(data:any) {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoGridComponent);
+    const component = this.container.createComponent(componentFactory);
+    /*
+    (<AutoGridComponent>component.instance)._action       = data.display.action;
+
+    (<AutoGridComponent>component.instance)._label_title  = data.display.title;
+    (<AutoGridComponent>component.instance)._label_submit = data.display.label_submit;
+    (<AutoGridComponent>component.instance)._label_cancel = data.display.label_cancel;
+    */
+
+
+    for (let i = 0; i < data.titles.length; i++) {
+      let option = {
+        label:data.titles[i].label
+      };
+
+      (<AutoGridComponent>component.instance)._titles.push(option);
+    }
+
+    for (let i = 0; i < data.rows.length; i++) {
+
+      let row = { cols: [] };
+      for (let j = 0; j < data.rows[i].cols.length; j++)
+        {
+          let col = {
+            type:data.rows[i].cols[j].type,
+            label:data.rows[i].cols[j].label
+          };
+          row.cols.push(col);
+        }
+      (<AutoGridComponent>component.instance)._rows.push(row);
+    }
+
+    (<AutoGridComponent>component.instance).startProcess();
 
     this.components.push(component);
   }

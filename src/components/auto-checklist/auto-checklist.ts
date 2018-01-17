@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ServicesProvider } from '../../providers/services/services';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the AutoChecklistComponent component.
@@ -29,8 +31,10 @@ export class AutoChecklistComponent {
   public _options = [];
 
   public _valid:boolean;
-  constructor() {
 
+  private events:Events;
+  constructor(private services:ServicesProvider) {
+    this.events = services.events;
   }
   public createForm() {
     let tmp = 0;
@@ -55,5 +59,8 @@ export class AutoChecklistComponent {
 
       if (tmp >= this._min && tmp <= this._max) this._valid = true;
       else this._valid = false;
+
+      let data = { id:this._ID, valid:this._valid };
+      this.events.publish("onForm", JSON.stringify(data));
   }
 }

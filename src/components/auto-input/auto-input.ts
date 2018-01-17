@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ServicesProvider } from '../../providers/services/services';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the AutoInputComponent component.
@@ -38,8 +40,11 @@ export class AutoInputComponent {
   public _display = [];
 
   public _form:FormGroup;
-  constructor(private _fb:FormBuilder) {
 
+  private events:Events;
+  constructor(private _fb:FormBuilder, private services:ServicesProvider) {
+
+      this.events = services.events;
   }
   public createForm() {
     this._form = this._fb.group({data:[""]});
@@ -55,5 +60,9 @@ export class AutoInputComponent {
       id:this._ID,
       value:this._value
     }
+  }
+  public onChange(event) {
+    let data = { id:this._ID, valid:this._form.controls['data'].valid };
+    this.events.publish("onForm", JSON.stringify(data));
   }
 }

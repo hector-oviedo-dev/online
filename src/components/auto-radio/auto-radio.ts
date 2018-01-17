@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ServicesProvider } from '../../providers/services/services';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the AutoRadioComponent component.
@@ -26,8 +28,10 @@ export class AutoRadioComponent {
   public _options = [];
 
   public _valid:boolean;
-  constructor() {
 
+  private events:Events;
+  constructor(private services:ServicesProvider) {
+    this.events = services.events;
   }
   public createForm() {
     this._valid = false;
@@ -45,5 +49,8 @@ export class AutoRadioComponent {
 
     this._valid = false;
     for (let i = 0; i < this._options.length; i++) if (this._options[i].check) this._valid = true;
+
+    let data = { id:this._ID, valid:this._valid };
+    this.events.publish("onForm", JSON.stringify(data));
   }
 }

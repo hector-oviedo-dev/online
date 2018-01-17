@@ -8,7 +8,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-select [(ngModel)]="_value">
+      <ion-select [(ngModel)]="_value" (ionChange)="onChange($event)">
         <ion-option *ngFor="let option of _options" [value]="option.value" [disabled]="!_enabled">{{option.label}}</ion-option>
       </ion-select>
     </ion-col>

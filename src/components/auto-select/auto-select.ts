@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ServicesProvider } from '../../providers/services/services';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the AutoSelectComponent component.
@@ -28,8 +30,9 @@ export class AutoSelectComponent {
   public _options = [];
 
   public _valid:boolean;
-  constructor() {
-
+  private events:Events;
+  constructor(private services:ServicesProvider) {
+    this.events = services.events;
   }
   public createForm() {
 
@@ -39,5 +42,11 @@ export class AutoSelectComponent {
       id:this._ID,
       value:this._value
     }
+  }
+  public onChange(event) {
+    if (this._value) this._valid = true;
+    else this._valid = false;
+    let data = { id:this._ID, valid:this._valid };
+    this.events.publish("onForm", JSON.stringify(data));
   }
 }

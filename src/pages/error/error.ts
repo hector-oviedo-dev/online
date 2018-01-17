@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { ContainerPage } from '../../pages/container/container';
+import { ServicesProvider } from '../../providers/services/services';
 
 /**
  * Generated class for the ErrorPage page.
@@ -15,13 +17,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ErrorPage {
   public MESSAGE:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.MESSAGE = navParams.get("MESSAGE");
-    console.log("mensaje " + this.MESSAGE)
-  }
 
+  private events:Events;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private services:ServicesProvider) {
+    this.events = services.events;
+    this.events.subscribe('onChangeError', (content) => { this.onChange(content); });
+    
+    this.MESSAGE = navParams.get("MESSAGE");
+  }
+  public onChange(content) {
+    console.log("FROM ERROR! on change")
+    this.navCtrl.push(ContainerPage);
+  }
+  ionViewWillLeave() {
+    console.log("error did leave")
+    this.events.unsubscribe('onChangeError');
+  }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ErrorPage');
+    console.log("error did load")
+
   }
 
 }

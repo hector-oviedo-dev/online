@@ -1,5 +1,4 @@
 import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutoInputComponent } from '../../components/auto-input/auto-input';
 import { AutoTextareaComponent } from '../../components/auto-textarea/auto-textarea';
 import { AutoDateComponent } from '../../components/auto-date/auto-date';
@@ -8,6 +7,8 @@ import { AutoCheckComponent } from '../../components/auto-check/auto-check';
 import { AutoChecklistComponent } from '../../components/auto-checklist/auto-checklist';
 import { AutoRadioComponent } from '../../components/auto-radio/auto-radio';
 import { ServicesProvider } from '../../providers/services/services';
+
+import { Events } from 'ionic-angular';
 /**
  * Generated class for the AutoFormComponent component.
  *
@@ -30,16 +31,31 @@ export class AutoFormComponent {
 
   public _action:string;
 
-  public complexForm : FormGroup;
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider, fb:FormBuilder) {
-      this.complexForm = fb.group({
-        'name':[null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(20)])]
-      });
+  public _valid:boolean = false;
+
+  public _controls = [];
+
+  private events:Events;
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider) {
+    this.events = this.services.events;
+    this.events.subscribe('onForm', (obj) => { this.onForm(obj); });
+  }
+  ionViewWillLeave() {
+    this.events.unsubscribe('onForm');
+  }
+  ionViewDidLoad() {
+
+  }
+  public onForm(objSTR) {
+    let obj = JSON.parse(objSTR);
+    this._valid = true;
+    for (let i = 0; i < this._controls.length;i++) {
+      if (this._controls[i].id == obj.id) this._controls[i].valid = obj.valid;
+      if (!this._controls[i].valid) this._valid = false;
+    }
+
   }
   public submitClick() {
-    for (let i = 0; this.components.length > i;i++) {
-      console.log(this.components[i].instance.getValue())
-    }
 
   }
   public cancelClick() {
@@ -48,6 +64,9 @@ export class AutoFormComponent {
   public startProcess() {
     for (var i = 0; i < this.values.length; i++)
     {
+      let control = { id:this.values[i].id , valid:false };
+
+
       switch (this.values[i].type) {
         case "TEXT":
           this.addInput(this.values[i]);
@@ -62,6 +81,7 @@ export class AutoFormComponent {
           this.addDate(this.values[i]);
           break;
         case "CHECKBOX":
+          control.valid = true;
           this.addCheckbox(this.values[i]);
           break;
         case "CHECKBOXLIST":
@@ -74,6 +94,8 @@ export class AutoFormComponent {
           this.addSelect(this.values[i]);
           break;
       }
+
+      this._controls.push(control);
     }
   }
   public addInput(value:any) {
