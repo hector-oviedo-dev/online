@@ -22,20 +22,17 @@ export class ErrorPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,private services:ServicesProvider) {
     this.events = services.events;
     this.events.subscribe('onChangeError', (content) => { this.onChange(content); });
-    
+
     this.MESSAGE = navParams.get("MESSAGE");
   }
   public onChange(content) {
-    console.log("FROM ERROR! on change")
-    this.navCtrl.push(ContainerPage);
+    let data = { refresh:true, content:content };
+    this.navCtrl.push(ContainerPage,data);
   }
   ionViewWillLeave() {
-    console.log("error did leave")
     this.events.unsubscribe('onChangeError');
   }
   ionViewDidLoad() {
-    console.log("error did load")
 
   }
-
 }

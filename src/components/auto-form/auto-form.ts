@@ -2,13 +2,16 @@ import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver } from
 import { AutoInputComponent } from '../../components/auto-input/auto-input';
 import { AutoTextareaComponent } from '../../components/auto-textarea/auto-textarea';
 import { AutoDateComponent } from '../../components/auto-date/auto-date';
-import { AutoSelectComponent } from '../../components/auto-select/auto-select';
 import { AutoCheckComponent } from '../../components/auto-check/auto-check';
 import { AutoChecklistComponent } from '../../components/auto-checklist/auto-checklist';
 import { AutoRadioComponent } from '../../components/auto-radio/auto-radio';
+import { AutoSelectComponent } from '../../components/auto-select/auto-select';
+import { AutoDuoselectComponent } from '../../components/auto-duoselect/auto-duoselect';
 import { ServicesProvider } from '../../providers/services/services';
 
-import { Events } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
+
+import { ErrorPage } from '../../pages/error/error';
 /**
  * Generated class for the AutoFormComponent component.
  *
@@ -36,7 +39,7 @@ export class AutoFormComponent {
   public _controls = [];
 
   private events:Events;
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider) {
+  constructor(public navCtrl: NavController, private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider) {
     this.events = this.services.events;
     this.events.subscribe('onForm', (obj) => { this.onForm(obj); });
   }
@@ -56,7 +59,28 @@ export class AutoFormComponent {
 
   }
   public submitClick() {
+    let data = [];
+    for (var i = 0; i < this.components.length; i++) data.push(this.components[i].instance.getValue());
 
+    console.log(data)
+
+    this.services.doPost(this._action,JSON.stringify(data)).subscribe(
+      data => { this.onServiceResult(data); },
+      err => {
+        let data = { "MESSAGE":"404 Server Address" }
+        this.navCtrl.push(ErrorPage, data);
+      }
+    );
+
+  }
+  public onServiceResult(result) {
+
+    if (result.success == true) console.log("Success");
+    else {
+      let data = { "MESSAGE":result.error }
+      this.navCtrl.push(ErrorPage, data);
+      //this.navCtrl.push(MainmenuPage);
+     }
   }
   public cancelClick() {
 
@@ -66,40 +90,103 @@ export class AutoFormComponent {
     {
       let control = { id:this.values[i].id , valid:false };
 
+      let arr = [];
+      let result;
 
       switch (this.values[i].type) {
         case "TEXT":
-          this.addInput(this.values[i]);
-          break;
-        case "PASSWORD":
-          this.addInput(this.values[i]);
+
+          arr = ["id","value","hidden","enabled","required","txt_required","txt_error","txt_help","min","max","mask","format","label","placeholder"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addInput(this.values[i]);
+
           break;
         case "TEXTAREA":
-          this.addTextarea(this.values[i]);
-          break;
-        case "DATE":
-          this.addDate(this.values[i]);
+
+          arr = ["id","value","hidden","enabled","required","txt_required","txt_error","txt_help","min","max","mask","format","label","placeholder"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addInput(this.values[i]);
+
           break;
         case "CHECKBOX":
+
           control.valid = true;
-          this.addCheckbox(this.values[i]);
+
+          arr = ["id","value","hidden","enabled","required","txt_help","label"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addCheckbox(this.values[i]);
+
           break;
         case "CHECKBOXLIST":
-          this.addCheckboxlist(this.values[i]);
+
+          arr = ["id","hidden","enabled","required","txt_required","txt_help","min","max","label","values"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addCheckboxlist(this.values[i]);
+
           break;
         case "RADIO":
-          this.addRadio(this.values[i]);
+
+          arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addRadio(this.values[i]);
+
           break;
         case "SELECT":
-          this.addSelect(this.values[i]);
+
+          arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
+          result = (this.validateComponent(this.values[i],arr));
+          if (!result.valid) {
+            let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+            this.navCtrl.push(ErrorPage, data);
+            return;
+          } else this.addSelect(this.values[i]);
+
           break;
+          case "DUOSELECT":
+
+            arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
+            result = (this.validateComponent(this.values[i],arr));
+            if (!result.valid) {
+              let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
+              this.navCtrl.push(ErrorPage, data);
+              return;
+            } else this.addDuoSelect(this.values[i]);
+
+            break;
       }
 
       this._controls.push(control);
     }
   }
+  public validateComponent(obj, arr) {
+    let result = {valid:true, missing:[] }
+    for (let i = 0; i < arr.length; i++) if (!obj.hasOwnProperty(arr[i])) result.missing.push(arr[i]);
+
+    if (result.missing.length) result.valid = false;
+
+    return result;
+  }
   public addInput(value:any) {
-//    if (this.checkValues("id","value","hidden","enabled","required","min","max",""))
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoInputComponent);
     const component = this.container.createComponent(componentFactory);
 
@@ -281,6 +368,7 @@ export class AutoFormComponent {
     return true;
   }
   public addSelect(value:any) {
+
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoSelectComponent);
     const component = this.container.createComponent(componentFactory);
 
@@ -290,6 +378,9 @@ export class AutoFormComponent {
     (<AutoSelectComponent>component.instance)._hidden      = value.hidden;
     (<AutoSelectComponent>component.instance)._enabled     = value.enabled;
     (<AutoSelectComponent>component.instance)._required    = value.required;
+
+    (<AutoSelectComponent>component.instance)._txt_required= value.txt_required;
+    (<AutoSelectComponent>component.instance)._txt_help    = value.txt_help;
 
     (<AutoSelectComponent>component.instance)._label       = value.label;
 
@@ -301,6 +392,40 @@ export class AutoFormComponent {
       if (value.values[i].check) (<AutoSelectComponent>component.instance)._value = value.values[i].value;
 
       (<AutoSelectComponent>component.instance)._options.push(option);
+    }
+
+    // Push the component so that we can keep track of which components are created
+    this.components.push(component);
+    return true;
+  }
+  public addDuoSelect(value:any) {
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoDuoselectComponent);
+    const component = this.container.createComponent(componentFactory);
+
+    (<AutoDuoselectComponent>component.instance)._ID          = value.id;
+    (<AutoDuoselectComponent>component.instance)._value       = value.value;
+
+    (<AutoDuoselectComponent>component.instance)._hidden      = value.hidden;
+    (<AutoDuoselectComponent>component.instance)._enabled     = value.enabled;
+    (<AutoDuoselectComponent>component.instance)._required    = value.required;
+
+    (<AutoDuoselectComponent>component.instance)._txt_required= value.txt_required;
+    (<AutoDuoselectComponent>component.instance)._txt_help    = value.txt_help;
+
+    (<AutoDuoselectComponent>component.instance)._label       = value.label;
+
+    for (let i = 0; i < value.values.length; i++) {
+      let option = {
+        label:value.values[i].label,
+        value:value.values[i].value,
+        values:[]
+      };
+      for (let j = 0; j < value.values[i].values.length; j++) option.values.push(value.values[i].values[j])
+
+      if (value.values[i].check) (<AutoDuoselectComponent>component.instance)._value = value.values[i].value;
+
+      (<AutoDuoselectComponent>component.instance)._options.push(option);
     }
 
     // Push the component so that we can keep track of which components are created

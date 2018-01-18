@@ -17,7 +17,7 @@ import { ServicesProvider } from '../../providers/services/services';
   templateUrl: 'dynamic.html',
 })
 export class DynamicPage {
-  public root;
+  public root = ContainerPage;
 
   public menus = [];
 
@@ -36,7 +36,7 @@ export class DynamicPage {
 
       this.menuProcess(this.menus[i].parent,this.menus[i].cascadeshowing)
     } else {
-      this.root = ContainerPage;
+      //this.root = ContainerPage;
       console.log("sending change event:" , this.menus[i].action)
       this.events.publish("onChange", this.menus[i].action);
       this.events.publish("onChangeError", this.menus[i].action);

@@ -9,6 +9,7 @@ import { AutoInputComponent } from '../components/auto-input/auto-input';
 import { AutoTextareaComponent } from '../components/auto-textarea/auto-textarea';
 import { AutoDateComponent } from '../components/auto-date/auto-date';
 import { AutoSelectComponent } from '../components/auto-select/auto-select';
+import { AutoDuoselectComponent } from '../components/auto-duoselect/auto-duoselect';
 import { AutoCheckComponent } from '../components/auto-check/auto-check';
 import { AutoChecklistComponent } from '../components/auto-checklist/auto-checklist';
 import { AutoRadioComponent } from '../components/auto-radio/auto-radio';
@@ -47,6 +48,7 @@ import { ServicesProvider } from '../providers/services/services';
     AutoTextareaComponent,
     AutoDateComponent,
     AutoSelectComponent,
+    AutoDuoselectComponent,
     AutoCheckComponent,
     AutoChecklistComponent,
     AutoRadioComponent,
@@ -76,6 +78,7 @@ import { ServicesProvider } from '../providers/services/services';
     AutoTextareaComponent,
     AutoDateComponent,
     AutoSelectComponent,
+    AutoDuoselectComponent,
     AutoCheckComponent,
     AutoChecklistComponent,
     AutoRadioComponent,

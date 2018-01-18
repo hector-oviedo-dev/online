@@ -53,6 +53,8 @@ export class AutoTextareaComponent {
     if (this._required) validators.push(Validators.minLength(this._min));
     if (this._required) validators.push(Validators.maxLength(this._max));
     this._form.controls["data"].setValidators(validators);
+
+    if (!this._enabled) this._form.controls["data"].disable();
   }
   public getValue() {
     return {

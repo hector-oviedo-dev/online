@@ -27,15 +27,20 @@ export class ContainerPage {
   public service:string;
 
   private events:Events;
+
+  private refresh:boolean = false;
+  private content;
   constructor(public navCtrl: NavController, public navParams: NavParams, private componentFactoryResolver: ComponentFactoryResolver,private services:ServicesProvider) {
     this.events = services.events;
     this.events.subscribe('onChange', (content) => { this.onChange(content); });
+
+    this.content = this.navParams.get('content');
+    this.refresh = this.navParams.get('refresh');
   }
   public onChange(content) {
     this.service = content;
     this.container.clear();
     this.doStart();
-    //this.navCtrl.push(ContainerPage);
   }
   public onServiceResult(data) {
     let res = data.json;
@@ -55,12 +60,12 @@ export class ContainerPage {
           }
         } else {
           let data = { "MESSAGE":"Se esperaba en posicion" + i.toString() +" de 'sections' el objeto 'type'" }
-          //this.navCtrl.push(ErrorPage, data);
+          this.navCtrl.push(ErrorPage, data);
         }
       }
     } else {
       let data = { "MESSAGE":"Se esperaba array 'sections'" }
-      //this.navCtrl.push(ErrorPage, data);
+      this.navCtrl.push(ErrorPage, data);
     }
   }
   ngOnInit() {
@@ -70,250 +75,287 @@ export class ContainerPage {
     this.events.unsubscribe('onChange');
   }
   ionViewDidLoad() {
+    if (this.refresh) this.service = this.content;
     if (this.service) this.doStart();
   }
   public doStart() {
-    this.services.doGet(this.service,"").subscribe(
-      data => { this.onServiceResult(data); },
-      err => {
-        let data = { "MESSAGE":"404 Server Address" }
-        this.navCtrl.push(ErrorPage, data);
-      }
-    );
-    /*
-    let form = {
-     type:"form",
-     controls: [
-       {
-        "id":"NAME",
-        "type":"TEXT",
-        "hidden":false,
-        "enabled":true,
-        "required":true,
-        "txt_required":"Debe ingresar su nombre.",
-        "txt_error":"",
-        "txt_help":"Ingrese su Nombre",
-        "max":15,
-        "min":5,
-        "mask":"nn-nnnnnnnn-n",
-        "format":"ALL",
-        "restrict":[],
-        "label":"Nombre",
-        "placeholder":"Ingrese su Nombre",
-        "display":[]
-      },
-      {
-        "id":"DESC",
-        "type":"TEXTAREA",
-        "hidden":false,
-        "enabled":true,
-        "required":true,
-        "txt_required":"La descripcion es obligatoria",
-        "txt_error":"Por favor verifique el formato",
-        "txt_help":"Ingrese una descripcion",
-        "max":500,
-        "min":10,
-        "mask":"",
-        "format":"",
-        "restrict":["A","B","C","$","1"],
-        "label":"Descripcion",
-        "placeholder":"Ingrese la descripcion",
-        "display":[]
-      },
-      {
-        "id":"CUIT_2",
-        "type":"TEXT",
-        "hidden":false,
-        "enabled":true,
-        "required":true,
-        "txt_required":"Este campo es obligatorio",
-        "txt_error":"Por favor verifique el formato",
-        "txt_help":"Ingrese su cuit o cuil",
-        "max":50,
-        "min":10,
-        "mask":"nn-nnnnnnnn-n",
-        "format":"RESTRICT",
-        "restrict":["A","B","C","$","1"],
-        "label":"CUIL/CUIT",
-        "placeholder":"Ingrese su CUIL/CUIT",
-        "display":[]
-      },
-      {
-        "id":"EMAIL_ALERT",
-        "type":"CHECKBOX",
-        "hidden":false,
-        "enabled":true,
-        "required":false,
-        "txt_help":"Avisar por email una vez registrado.",
-        "label":"Avisar por E-mail",
-        "check":true
-      },
-      {
-        "id":"PROVINCIA",
-        "type":"CHECKBOXLIST",
-        "hidden":false,
-        "enabled":true,
-        "required":false,
-        "txt_required":"Este campo es obligatorio",
-        "txt_help":"Seleccione las provincias",
-        "label":"Seleccionar Provincias",
-        "min":1,
-        "max":2,
-        "values":[
-          {
-            "label":"Formosa",
-            "value":"formosa",
-            "check":false
-          },
-          {
-            "label":"Buenos Aires",
-            "value":"bsas",
-            "check":false
-          },
-          {
-            "label":"Santa Fe",
-            "value":"santafe",
-            "check":false
-          }
-        ]
-      },
-      {
-        "id":"PROVINCIA_2",
-        "type":"RADIO",
-        "hidden":false,
-        "enabled":true,
-        "required":false,
-        "txt_required":"Este campo es obligatorio",
-        "txt_help":"Seleccione UNA de las provincias",
-        "label":"Seleccionar Provincia Actual",
-        "values":[
-          {
-            "label":"Formosa",
-            "value":"formosa",
-            "check":false
-          },
-          {
-            "label":"Buenos Aires",
-            "value":"bsas",
-            "check":false
-          },
-          {
-            "label":"Santa Fe",
-            "value":"santafe",
-            "check":false
-          }
-        ]
-      },
-      {
-        "id":"PROVINCIA_3",
-        "type":"SELECT",
-        "hidden":false,
-        "enabled":true,
-        "required":false,
-        "txt_required":"Este campo es obligatorio",
-        "txt_help":"Seleccione UNA de las provincias",
-        "label":"Seleccionar Provincia",
-        "values":[
-          {
-            "label":"Formosa",
-            "value":"formosa",
-            "check":false
-          },
-          {
-            "label":"Buenos Aires",
-            "value":"bsas",
-            "check":false
-          },
-          {
-            "label":"Santa Fe",
-            "value":"santafe",
-            "check":false
-          }
-        ]
-      }
-    ],
-    display: {
-      title:"Formulario de agregar",
-      action:"postNewData",
-      label_submit:"Agregar",
-      label_cancel:"Cerrar"
-    }
-    };
-
-    let grid = {
-       type:"grid",
-       titles:[
+    if (!this.services.hardcoded) {
+      this.services.doGet(this.service,"").subscribe(
+        data => { this.onServiceResult(data); },
+        err => {
+          let data = { "MESSAGE":"404 Server Address" }
+          this.navCtrl.push(ErrorPage, data);
+        }
+      );
+    } else {
+      let form = {
+       type:"form",
+       controls: [
          {
-           label:"ROW 1 TITLE"
-         },
-         {
-          label:"ROW 2 TITLE"
+          "id":"NAME",
+          "type":"TEXT",
+          "value":"",
+          "hidden":false,
+          "enabled":true,
+          "required":true,
+          "txt_required":"Debe ingresar su nombre.",
+          "txt_error":"",
+          "txt_help":"Ingrese su Nombre",
+          "max":15,
+          "min":5,
+          "mask":"nn-nnnnnnnn-n",
+          "format":"ALL",
+          "restrict":[],
+          "label":"Nombre",
+          "placeholder":"Ingrese su Nombre",
+          "display":[]
         },
         {
-          label:"ROW 3 TITLE"
+          "id":"DESC",
+          "type":"TEXTAREA",
+          "value":"",
+          "hidden":false,
+          "enabled":true,
+          "required":true,
+          "txt_required":"La descripcion es obligatoria",
+          "txt_error":"Por favor verifique el formato",
+          "txt_help":"Ingrese una descripcion",
+          "max":500,
+          "min":10,
+          "mask":"",
+          "format":"",
+          "restrict":["A","B","C","$","1"],
+          "label":"Descripcion",
+          "placeholder":"Ingrese la descripcion",
+          "display":[]
+        },
+        {
+          "id":"CUIT_2",
+          "type":"TEXT",
+          "value":"",
+          "hidden":false,
+          "enabled":true,
+          "required":true,
+          "txt_required":"Este campo es obligatorio",
+          "txt_error":"Por favor verifique el formato",
+          "txt_help":"Ingrese su cuit o cuil",
+          "max":50,
+          "min":10,
+          "mask":"nn-nnnnnnnn-n",
+          "format":"RESTRICT",
+          "restrict":["A","B","C","$","1"],
+          "label":"CUIL/CUIT",
+          "placeholder":"Ingrese su CUIL/CUIT",
+          "display":[]
+        },
+        {
+          "id":"EMAIL_ALERT",
+          "type":"CHECKBOX",
+          "value":true,
+          "hidden":false,
+          "enabled":true,
+          "required":false,
+          "txt_help":"Avisar por email una vez registrado.",
+          "label":"Avisar por E-mail",
+          "check":true
+        },
+        {
+          "id":"PROVINCIA",
+          "type":"CHECKBOXLIST",
+          "hidden":false,
+          "enabled":true,
+          "required":false,
+          "txt_required":"Este campo es obligatorio",
+          "txt_help":"Seleccione las provincias",
+          "label":"Seleccionar Provincias",
+          "min":1,
+          "max":2,
+          "values":[
+            {
+              "label":"Formosa",
+              "value":"formosa",
+              "check":false
+            },
+            {
+              "label":"Buenos Aires",
+              "value":"bsas",
+              "check":false
+            },
+            {
+              "label":"Santa Fe",
+              "value":"santafe",
+              "check":false
+            }
+          ]
+        },
+        {
+          "id":"PROVINCIA_2",
+          "type":"RADIO",
+          "hidden":false,
+          "enabled":true,
+          "required":false,
+          "txt_required":"Este campo es obligatorio",
+          "txt_help":"Seleccione UNA de las provincias",
+          "label":"Seleccionar Provincia Actual",
+          "values":[
+            {
+              "label":"Formosa",
+              "value":"formosa",
+              "check":false
+            },
+            {
+              "label":"Buenos Aires",
+              "value":"bsas",
+              "check":false
+            },
+            {
+              "label":"Santa Fe",
+              "value":"santafe",
+              "check":false
+            }
+          ]
+        },
+        {
+          "id":"PROVINCIA_3",
+          "type":"SELECT",
+          "hidden":false,
+          "enabled":true,
+          "required":false,
+          "txt_required":"Este campo es obligatorio",
+          "txt_help":"Seleccione UNA de las provincias",
+          "label":"Seleccionar Provincia",
+          "values":[
+            {
+              "label":"Formosa",
+              "value":"formosa",
+              "check":false
+            },
+            {
+              "label":"Buenos Aires",
+              "value":"bsas",
+              "check":false
+            },
+            {
+              "label":"Santa Fe",
+              "value":"santafe",
+              "check":false
+            }
+          ]
+        },
+        {
+          "id":"PAIS_PROVINCIA",
+          "type":"DUOSELECT",
+          "hidden":false,
+          "enabled":true,
+          "required":false,
+          "txt_required":"Este campo es obligatorio",
+          "txt_help":"Seleccione un pais, y luego una de las provincias",
+          "label":"Seleccionar Pais",
+          "values":[
+            {
+              "label":"Argentina",
+              "value":"argentina",
+              "values":[{label:"formosa",value:"formosa","check":false},{label:"Chaco",value:"chaco","check":false}],
+              "check":false
+            },
+            {
+              "label":"Chile",
+              "value":"chile",
+              "values":[{label:"Santiago de Chile",value:"santiago","check":false},{label:"Valparaiso",value:"valparaiso","check":false}],
+              "check":false
+            },
+            {
+              "label":"Japon",
+              "value":"japon",
+              "values":[{label:"Tokio",value:"tokio","check":false},{label:"Seoul",value:"seoul","check":false}],
+              "check":false
+            }
+          ]
         }
       ],
-       rows:[
-       {
-         cols:[
+      display: {
+        title:"Formulario de agregar",
+        action:"postNewData",
+        label_submit:"Agregar",
+        label_cancel:"Cerrar"
+      }
+      };
+
+      let grid = {
+         type:"grid",
+         titles:[
            {
-             type:"text",
-             label:"ROW 1 COL 1"
+             label:"ROW 1 TITLE"
            },
            {
-             type:"text",
-             label:"ROW 1 COL 2"
-           },
-           {
-             type:"text",
-             label:"ROW 1 COL 3"
-           }
-         ]
-       },
-       {
-         cols:[
-           {
-             type:"text",
-             label:"ROW 2 COL 1"
-           },
-           {
-             type:"text",
-             label:"ROW 2 COL 2"
-           },
-           {
-             type:"text",
-             label:"ROW 2 COL 3"
-           }
-         ]
-       },
-       {
-         cols:[
-           {
-             type:"text",
-             label:"ROW 3 COL 1"
-           },
-           {
-             type:"text",
-             label:"ROW 3 COL 2"
-           },
-           {
-             type:"text",
-             label:"ROW 3 COL 3"
-           }
-         ]
-       }
-     ]
+            label:"ROW 2 TITLE"
+          },
+          {
+            label:"ROW 3 TITLE"
+          }
+        ],
+         rows:[
+         {
+           cols:[
+             {
+               type:"text",
+               label:"ROW 1 COL 1"
+             },
+             {
+               type:"text",
+               label:"ROW 1 COL 2"
+             },
+             {
+               type:"text",
+               label:"ROW 1 COL 3"
+             }
+           ]
+         },
+         {
+           cols:[
+             {
+               type:"text",
+               label:"ROW 2 COL 1"
+             },
+             {
+               type:"text",
+               label:"ROW 2 COL 2"
+             },
+             {
+               type:"text",
+               label:"ROW 2 COL 3"
+             }
+           ]
+         },
+         {
+           cols:[
+             {
+               type:"text",
+               label:"ROW 3 COL 1"
+             },
+             {
+               type:"text",
+               label:"ROW 3 COL 2"
+             },
+             {
+               type:"text",
+               label:"ROW 3 COL 3"
+             }
+           ]
+         }
+       ]
+      }
+
+      let sections = [];
+      sections.push(form);
+      sections.push(grid);
+
+      let res = { json: { sections:sections}};
+
+
+
+      this.onServiceResult(res);
     }
-
-    let sections = [];
-    sections.push(form);
-    sections.push(grid);
-
-    let res = { json: { sections:sections}};
-
-
-
-    this.onServiceResult(res);*/
   }
   ///Add Form View
   public addFormComponent(data:any) {

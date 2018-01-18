@@ -10,6 +10,8 @@ import { Events } from 'ionic-angular';
 */
 @Injectable()
 export class ServicesProvider {
+  public hardcoded:boolean = false;
+
   public _SERVICE_BASE = "http://10.10.2.63:8080/api/";
 
 

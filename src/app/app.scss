@@ -29,11 +29,18 @@
   border-radius: 5px;
   border: 1px solid #f53d3d;
 }
+.formBoxDisabled {
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
 .formTextValid {
   border: 1px solid #488aff;
 }
 .formTextInalid {
   border: 1px solid #f53d3d;
+}
+.formBoxDisabled {
+  border: 1px solid #cccccc;
 }
 .formHelpButton {
   right: 0;

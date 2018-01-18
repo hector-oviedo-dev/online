@@ -1,6 +1,6 @@
 <!-- Generated template for the AutoInputComponent component -->
 <form [formGroup]="_form">
-<ion-grid [hidden]="_hidden" [ngClass]="[(_form.controls['data'].valid)?'formBoxValid':'formBoxInalid']">
+<ion-grid [hidden]="_hidden" [ngClass]="(_enabled)?((_form.controls['data'].valid)?'formBoxValid':'formBoxInalid'):'formBoxDisabled'">
   <ion-row>
     <ion-col *ngIf="_label != undefined" class="formTextLabel">
       <ion-label>{{_label}}
@@ -12,7 +12,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-textarea formControlName="data" placeholder="{{_placeholder}}" min="{{_min}}"  maxlength="{{_max}}" [ngModel]="_value" [disabled]="!_enabled" [ngClass]="[(_form.controls['data'].valid)?'formTextValid':'formTextInalid']" (keyup)="onChange($event)"></ion-textarea>
+      <ion-textarea formControlName="data" placeholder="{{_placeholder}}" min="{{_min}}"  maxlength="{{_max}}" [ngModel]="_value" [ngClass]="(_enabled)?((_form.controls['data'].valid)?'formTextValid':'formTextInalid'):'formTextDisabled'" (keyup)="onChange($event)"></ion-textarea>
     </ion-col>
   </ion-row>
   <ion-row>
