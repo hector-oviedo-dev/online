@@ -1,19 +1,23 @@
 <!-- Generated template for the AutoGridComponent component -->
-<ion-content>
-  <table>
 
-
-  <tr class="row header">
-    <th class="col" *ngFor="let title of _titles;">{{title.label}}</th>
-  </tr>
-
-    <tr class="row header" *ngFor="let row of _rows">
-
-      <td class="col" *ngFor="let col of row.cols">
-        <label for="">{{col.label}}</label>
-        <button  *ngIf="col.type=='button'" ion-button>{{_label_cancel}}</button>
-      </td>
-    </tr>
-
-  </table>
-</ion-content>
+  <ion-grid class="gridClass">
+    <ion-row class="gridHeaderRow">
+      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>{{title.label}}</ion-col>
+    </ion-row>
+    <ion-row class="gridRow" *ngFor="let row of _rows;let odd = odd;" [ngClass]="(odd)?'gridRowOdd':gridRowEven">
+      <ion-col *ngFor="let col of row.cols;" class="gridCol" text-center>
+        <label>{{col.label}}</label>
+        <button *ngIf="col.type=='button'" ion-button>{{_label_cancel}}</button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="gridRow">
+      <ion-col text-center>
+        <button ion-button><</button>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button>></button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>

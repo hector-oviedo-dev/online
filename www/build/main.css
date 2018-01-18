@@ -45795,6 +45795,27 @@ fieldset legend {
   height: 25px;
 }
 
+.gridClass {
+  border: solid 1px grey;
+}
+
+.gridHeaderCol {
+  font-weight: bold;
+  background-color: lightgrey;
+}
+
+.gridCol {
+  border: solid 1px grey;
+  border-top-style: none;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-right-style: none;
+}
+
+.gridRowOdd {
+  background-color: lightcyan;
+}
+
 #sidenav ion-item-group[submenu] {
   overflow: hidden;
   display: block;

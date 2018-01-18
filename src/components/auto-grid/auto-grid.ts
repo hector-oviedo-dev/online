@@ -25,6 +25,8 @@ export class AutoGridComponent {
   public _titles = [];
   public _rows = [];
 
+  public _width:number;
+
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private services:ServicesProvider) {
 
   }

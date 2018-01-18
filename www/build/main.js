@@ -610,16 +610,15 @@ var AutoFormComponent = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
     ], AutoFormComponent.prototype, "container", void 0);
     AutoFormComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'auto-form',template:/*ion-inline-start:"D:\git\online\src\components\auto-form\auto-form.html"*/'<ion-grid>\n\n  <ion-row>\n  <ion-col>\n    <br>\n    <ion-header>\n\n        <ion-title>{{_label_title}}</ion-title>\n        <br>\n\n    </ion-header>\n    <br>\n  </ion-col>\n  </ion-row>\n  <ion-row>\n  <ion-col>\n    <ng-template #container>\n    </ng-template>\n  </ion-col>\n  </ion-row>\n\n  <ion-row>\n  <ion-col>\n    <button ion-button [disabled]="!_valid" (click)="submitClick()">{{_label_submit}}</button>\n  </ion-col>\n  <ion-col>\n    <button ion-button>{{_label_cancel}}</button>\n  </ion-col>\n  </ion-row>\n</ion-grid>\n'/*ion-inline-end:"D:\git\online\src\components\auto-form\auto-form.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */]])
     ], AutoFormComponent);
     return AutoFormComponent;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=auto-form.js.map
@@ -1131,10 +1130,9 @@ var AutoDuoselectComponent = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'auto-duoselect',template:/*ion-inline-start:"D:\git\online\src\components\auto-duoselect\auto-duoselect.html"*/'<!-- Generated template for the AutoDuoselectComponent component -->\n<ion-grid [hidden]="_hidden" [ngClass]="[(_value)?\'formBoxValid\':\'formBoxInalid\']">\n  <ion-row>\n    <ion-col *ngIf="_label != undefined" class="formTextLabel">\n      <ion-label>{{_label}}\n      </ion-label>\n    </ion-col>\n    <ion-col>\n      <button ion-fab [(tooltip)]="_txt_help" positionV="bottom" arrow class="formHelpButton" float-right>?</button>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col>\n      <ion-select [(ngModel)]="_actual" (ionChange)="onSelect($event)">\n        <ion-option *ngFor="let option of _options" [value]="option.value" [disabled]="!_enabled">{{option.label}}</ion-option>\n      </ion-select>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col>\n      <ion-select [(ngModel)]="_actual2" (ionChange)="onChange($event)">\n        <ion-option *ngFor="let value of _values" [value]="value.value" [disabled]="!_enabled">{{value.label}}</ion-option>\n      </ion-select>\n    </ion-col>\n  </ion-row>\n  <ion-row>\n    <ion-col>\n      <ion-label color="danger" *ngIf="(!_value)" stacked  class="formErrorText">* {{_txt_required}}</ion-label>\n    </ion-col>\n  </ion-row>\n</ion-grid>\n<br>\n'/*ion-inline-end:"D:\git\online\src\components\auto-duoselect\auto-duoselect.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]])
     ], AutoDuoselectComponent);
     return AutoDuoselectComponent;
-    var _a;
 }());
 
 //# sourceMappingURL=auto-duoselect.js.map
@@ -1177,15 +1175,16 @@ var AutoGridComponent = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
     ], AutoGridComponent.prototype, "container", void 0);
     AutoGridComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'auto-grid',template:/*ion-inline-start:"D:\git\online\src\components\auto-grid\auto-grid.html"*/'<!-- Generated template for the AutoGridComponent component -->\n<ion-content>\n  <table>\n\n\n  <tr class="row header">\n    <th class="col" *ngFor="let title of _titles;">{{title.label}}</th>\n  </tr>\n\n    <tr class="row header" *ngFor="let row of _rows">\n\n      <td class="col" *ngFor="let col of row.cols">\n        <label for="">{{col.label}}</label>\n        <button  *ngIf="col.type==\'button\'" ion-button>{{_label_cancel}}</button>\n      </td>\n    </tr>\n\n  </table>\n</ion-content>\n'/*ion-inline-end:"D:\git\online\src\components\auto-grid\auto-grid.html"*/
+            selector: 'auto-grid',template:/*ion-inline-start:"D:\git\online\src\components\auto-grid\auto-grid.html"*/'<!-- Generated template for the AutoGridComponent component -->\n\n  <ion-grid class="gridClass">\n    <ion-row class="gridHeaderRow">\n      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>{{title.label}}</ion-col>\n    </ion-row>\n    <ion-row class="gridRow" *ngFor="let row of _rows;let odd = odd;" [ngClass]="(odd)?\'gridRowOdd\':gridRowEven">\n      <ion-col *ngFor="let col of row.cols;" class="gridCol" text-center>\n        <label>{{col.label}}</label>\n        <button *ngIf="col.type==\'button\'" ion-button>{{_label_cancel}}</button>\n      </ion-col>\n    </ion-row>\n    <ion-row class="gridRow">\n      <ion-col text-center>\n        <button ion-button><</button>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col text-center>\n        <button ion-button>></button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n'/*ion-inline-end:"D:\git\online\src\components\auto-grid\auto-grid.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]) === "function" && _c || Object])
     ], AutoGridComponent);
     return AutoGridComponent;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=auto-grid.js.map
@@ -1293,7 +1292,7 @@ var ServicesProvider = (function () {
     function ServicesProvider(http, events) {
         this.http = http;
         this.events = events;
-        this.hardcoded = true;
+        this.hardcoded = false;
         this._SERVICE_BASE = "http://10.10.2.63:8080/api/";
     }
     ServicesProvider.prototype.doPost = function (service, data) {
@@ -1310,9 +1309,10 @@ var ServicesProvider = (function () {
     };
     ServicesProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]) === "function" && _b || Object])
     ], ServicesProvider);
     return ServicesProvider;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=services.js.map

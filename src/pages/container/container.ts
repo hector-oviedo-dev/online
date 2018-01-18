@@ -377,6 +377,8 @@ export class ContainerPage {
   public addGridComponent(data:any) {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoGridComponent);
     const component = this.container.createComponent(componentFactory);
+
+
     /*
     (<AutoGridComponent>component.instance)._action       = data.display.action;
 
@@ -384,7 +386,6 @@ export class ContainerPage {
     (<AutoGridComponent>component.instance)._label_submit = data.display.label_submit;
     (<AutoGridComponent>component.instance)._label_cancel = data.display.label_cancel;
     */
-
 
     for (let i = 0; i < data.titles.length; i++) {
       let option = {
