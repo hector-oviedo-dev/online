@@ -169,24 +169,10 @@ export class ContainerPage {
           "txt_help":"Seleccione las provincias",
           "label":"Seleccionar Provincias",
           "min":1,
-          "max":2,
+          "max":2/*,
           "values":[
-            {
-              "label":"Formosa",
-              "value":"formosa",
-              "check":false
-            },
-            {
-              "label":"Buenos Aires",
-              "value":"bsas",
-              "check":false
-            },
-            {
-              "label":"Santa Fe",
-              "value":"santafe",
-              "check":false
-            }
-          ]
+
+          ]*/
         },
         {
           "id":"PROVINCIA_2",
@@ -199,7 +185,7 @@ export class ContainerPage {
           "label":"Seleccionar Provincia Actual",
           "values":[
             {
-              "label":"Formosa",
+
               "value":"formosa",
               "check":false
             },

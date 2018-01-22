@@ -2,12 +2,19 @@
 
   <ion-grid class="gridClass">
     <ion-row class="gridHeaderRow">
-      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>{{title.label}}</ion-col>
+      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>
+
+        <ion-item>
+          <span>{{title.label}}</span>
+          <button ion-button clear outline><ion-icon name="arrow-dropdown"></ion-icon></button>
+        </ion-item>
+
+      </ion-col>
     </ion-row>
     <ion-row class="gridRow" *ngFor="let row of _rows;let odd = odd;" [ngClass]="(odd)?'gridRowOdd':gridRowEven">
       <ion-col *ngFor="let col of row.cols;" class="gridCol" text-center>
-        <label>{{col.label}}</label>
-        <button *ngIf="col.type=='button'" ion-button>{{_label_cancel}}</button>
+        <ion-label>{{col.label}}</ion-label>
+        <button *ngIf="col.type == 'button'" ion-button>{{_label_cancel}}</button>
       </ion-col>
     </ion-row>
     <ion-row class="gridRow">

@@ -93,6 +93,9 @@ export class AutoFormComponent {
       let arr = [];
       let result;
 
+      let arrs;
+      let resultARR;
+
       switch (this.values[i].type) {
         case "TEXT":
 
@@ -131,8 +134,9 @@ export class AutoFormComponent {
           break;
         case "CHECKBOXLIST":
 
-          arr = ["id","hidden","enabled","required","txt_required","txt_help","min","max","label","values"];
+          arr = ["id","hidden","enabled","required","txt_required","txt_help","min","max","label"];
           result = (this.validateComponent(this.values[i],arr));
+
           if (!result.valid) {
             let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
             this.navCtrl.push(ErrorPage, data);
@@ -141,9 +145,9 @@ export class AutoFormComponent {
 
           break;
         case "RADIO":
-
           arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
           result = (this.validateComponent(this.values[i],arr));
+
           if (!result.valid) {
             let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
             this.navCtrl.push(ErrorPage, data);
@@ -152,9 +156,9 @@ export class AutoFormComponent {
 
           break;
         case "SELECT":
-
           arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
           result = (this.validateComponent(this.values[i],arr));
+
           if (!result.valid) {
             let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
             this.navCtrl.push(ErrorPage, data);
@@ -163,9 +167,9 @@ export class AutoFormComponent {
 
           break;
           case "DUOSELECT":
-
             arr = ["id","hidden","enabled","required","txt_required","txt_help","label","values"];
             result = (this.validateComponent(this.values[i],arr));
+
             if (!result.valid) {
               let data = { "MESSAGE":"MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing }
               this.navCtrl.push(ErrorPage, data);
@@ -318,7 +322,7 @@ export class AutoFormComponent {
     (<AutoChecklistComponent>component.instance)._max         = value.max;
 
     (<AutoChecklistComponent>component.instance)._label       = value.label;
-
+    /*
     for (let i = 0; i < value.values.length; i++) {
       let option = {
         label:value.values[i].label,
@@ -327,7 +331,7 @@ export class AutoFormComponent {
       };
 
       (<AutoChecklistComponent>component.instance)._options.push(option);
-    }
+    }*/
 
     (<AutoChecklistComponent>component.instance).createForm();
 

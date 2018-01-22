@@ -332,6 +332,8 @@ var AutoFormComponent = (function () {
             var control = { id: this.values[i].id, valid: false };
             var arr = [];
             var result = void 0;
+            var arrs = void 0;
+            var resultARR = void 0;
             switch (this.values[i].type) {
                 case "TEXT":
                     arr = ["id", "value", "hidden", "enabled", "required", "txt_required", "txt_error", "txt_help", "min", "max", "mask", "format", "label", "placeholder"];
@@ -368,7 +370,7 @@ var AutoFormComponent = (function () {
                         this.addCheckbox(this.values[i]);
                     break;
                 case "CHECKBOXLIST":
-                    arr = ["id", "hidden", "enabled", "required", "txt_required", "txt_help", "min", "max", "label", "values"];
+                    arr = ["id", "hidden", "enabled", "required", "txt_required", "txt_help", "min", "max", "label"];
                     result = (this.validateComponent(this.values[i], arr));
                     if (!result.valid) {
                         var data = { "MESSAGE": "MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing };
@@ -520,14 +522,16 @@ var AutoFormComponent = (function () {
         component.instance._min = value.min;
         component.instance._max = value.max;
         component.instance._label = value.label;
-        for (var i = 0; i < value.values.length; i++) {
-            var option = {
-                label: value.values[i].label,
-                value: value.values[i].value,
-                check: value.values[i].check
-            };
-            component.instance._options.push(option);
-        }
+        /*
+        for (let i = 0; i < value.values.length; i++) {
+          let option = {
+            label:value.values[i].label,
+            value:value.values[i].value,
+            check:value.values[i].check
+          };
+    
+          (<AutoChecklistComponent>component.instance)._options.push(option);
+        }*/
         component.instance.createForm();
         // Push the component so that we can keep track of which components are created
         this.components.push(component);
@@ -610,15 +614,16 @@ var AutoFormComponent = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
     ], AutoFormComponent.prototype, "container", void 0);
     AutoFormComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'auto-form',template:/*ion-inline-start:"D:\git\online\src\components\auto-form\auto-form.html"*/'<ion-grid>\n\n  <ion-row>\n  <ion-col>\n    <br>\n    <ion-header>\n\n        <ion-title>{{_label_title}}</ion-title>\n        <br>\n\n    </ion-header>\n    <br>\n  </ion-col>\n  </ion-row>\n  <ion-row>\n  <ion-col>\n    <ng-template #container>\n    </ng-template>\n  </ion-col>\n  </ion-row>\n\n  <ion-row>\n  <ion-col>\n    <button ion-button [disabled]="!_valid" (click)="submitClick()">{{_label_submit}}</button>\n  </ion-col>\n  <ion-col>\n    <button ion-button>{{_label_cancel}}</button>\n  </ion-col>\n  </ion-row>\n</ion-grid>\n'/*ion-inline-end:"D:\git\online\src\components\auto-form\auto-form.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_services_services__["a" /* ServicesProvider */]) === "function" && _d || Object])
     ], AutoFormComponent);
     return AutoFormComponent;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=auto-form.js.map
@@ -1175,16 +1180,15 @@ var AutoGridComponent = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
     ], AutoGridComponent.prototype, "container", void 0);
     AutoGridComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'auto-grid',template:/*ion-inline-start:"D:\git\online\src\components\auto-grid\auto-grid.html"*/'<!-- Generated template for the AutoGridComponent component -->\n\n  <ion-grid class="gridClass">\n    <ion-row class="gridHeaderRow">\n      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>{{title.label}}</ion-col>\n    </ion-row>\n    <ion-row class="gridRow" *ngFor="let row of _rows;let odd = odd;" [ngClass]="(odd)?\'gridRowOdd\':gridRowEven">\n      <ion-col *ngFor="let col of row.cols;" class="gridCol" text-center>\n        <label>{{col.label}}</label>\n        <button *ngIf="col.type==\'button\'" ion-button>{{_label_cancel}}</button>\n      </ion-col>\n    </ion-row>\n    <ion-row class="gridRow">\n      <ion-col text-center>\n        <button ion-button><</button>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col text-center>\n        <button ion-button>></button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n'/*ion-inline-end:"D:\git\online\src\components\auto-grid\auto-grid.html"*/
+            selector: 'auto-grid',template:/*ion-inline-start:"D:\git\online\src\components\auto-grid\auto-grid.html"*/'<!-- Generated template for the AutoGridComponent component -->\n\n  <ion-grid class="gridClass">\n    <ion-row class="gridHeaderRow">\n      <ion-col class="gridHeaderCol" *ngFor="let title of _titles;" text-center>\n\n        <ion-item>\n          <span>{{title.label}}</span>\n          <button ion-button clear outline><ion-icon name="arrow-dropdown"></ion-icon></button>\n        </ion-item>\n\n      </ion-col>\n    </ion-row>\n    <ion-row class="gridRow" *ngFor="let row of _rows;let odd = odd;" [ngClass]="(odd)?\'gridRowOdd\':gridRowEven">\n      <ion-col *ngFor="let col of row.cols;" class="gridCol" text-center>\n        <ion-label>{{col.label}}</ion-label>\n        <button *ngIf="col.type == \'button\'" ion-button>{{_label_cancel}}</button>\n      </ion-col>\n    </ion-row>\n    <ion-row class="gridRow">\n      <ion-col text-center>\n        <button ion-button><</button>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col text-center>\n        <button ion-button>></button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n'/*ion-inline-end:"D:\git\online\src\components\auto-grid\auto-grid.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_1__providers_services_services__["a" /* ServicesProvider */]])
     ], AutoGridComponent);
     return AutoGridComponent;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=auto-grid.js.map
@@ -1292,7 +1296,7 @@ var ServicesProvider = (function () {
     function ServicesProvider(http, events) {
         this.http = http;
         this.events = events;
-        this.hardcoded = false;
+        this.hardcoded = true;
         this._SERVICE_BASE = "http://10.10.2.63:8080/api/";
     }
     ServicesProvider.prototype.doPost = function (service, data) {
@@ -1309,10 +1313,9 @@ var ServicesProvider = (function () {
     };
     ServicesProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]])
     ], ServicesProvider);
     return ServicesProvider;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=services.js.map
@@ -1925,24 +1928,10 @@ var ContainerPage = (function () {
                         "txt_help": "Seleccione las provincias",
                         "label": "Seleccionar Provincias",
                         "min": 1,
-                        "max": 2,
-                        "values": [
-                            {
-                                "label": "Formosa",
-                                "value": "formosa",
-                                "check": false
-                            },
-                            {
-                                "label": "Buenos Aires",
-                                "value": "bsas",
-                                "check": false
-                            },
-                            {
-                                "label": "Santa Fe",
-                                "value": "santafe",
-                                "check": false
-                            }
-                        ]
+                        "max": 2 /*,
+                        "values":[
+              
+                        ]*/
                     },
                     {
                         "id": "PROVINCIA_2",
@@ -1955,7 +1944,6 @@ var ContainerPage = (function () {
                         "label": "Seleccionar Provincia Actual",
                         "values": [
                             {
-                                "label": "Formosa",
                                 "value": "formosa",
                                 "check": false
                             },

@@ -45801,7 +45801,6 @@ fieldset legend {
 
 .gridHeaderCol {
   font-weight: bold;
-  background-color: lightgrey;
 }
 
 .gridCol {
@@ -45813,7 +45812,7 @@ fieldset legend {
 }
 
 .gridRowOdd {
-  background-color: lightcyan;
+  background-color: lightblue;
 }
 
 #sidenav ion-item-group[submenu] {
