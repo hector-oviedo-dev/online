@@ -370,7 +370,7 @@ var AutoFormComponent = (function () {
                         this.addCheckbox(this.values[i]);
                     break;
                 case "CHECKBOXLIST":
-                    arr = ["id", "hidden", "enabled", "required", "txt_required", "txt_help", "min", "max", "label"];
+                    arr = ["id", "hidden", "enabled", "required", "txt_required", "txt_help", "min", "max", "label", "servicio"];
                     result = (this.validateComponent(this.values[i], arr));
                     if (!result.valid) {
                         var data = { "MESSAGE": "MalFormed: Missing at object of type: " + this.values[i].type + " objects: " + result.missing };
@@ -511,17 +511,19 @@ var AutoFormComponent = (function () {
         return true;
     };
     AutoFormComponent.prototype.addCheckboxlist = function (value) {
+        var _this = this;
         var componentFactory = this.componentFactoryResolver.resolveComponentFactory(__WEBPACK_IMPORTED_MODULE_5__components_auto_checklist_auto_checklist__["a" /* AutoChecklistComponent */]);
         var component = this.container.createComponent(componentFactory);
         component.instance._ID = value.id;
         component.instance._hidden = value.hidden;
         component.instance._enabled = value.enabled;
-        component.instance._required = value.required;
+        component.instance._required = false;
         component.instance._txt_required = value.txt_required;
         component.instance._txt_help = value.txt_help;
         component.instance._min = value.min;
         component.instance._max = value.max;
         component.instance._label = value.label;
+        console.log("el texto es:" + value.label);
         /*
         for (let i = 0; i < value.values.length; i++) {
           let option = {
@@ -532,11 +534,24 @@ var AutoFormComponent = (function () {
     
           (<AutoChecklistComponent>component.instance)._options.push(option);
         }*/
-        component.instance.createForm();
+        //(<AutoChecklistComponent>component.instance).createForm();
         // Push the component so that we can keep track of which components are created
         this.components.push(component);
-        console.log("list agregada");
+        this.services.doGet(value.servicio, "", true).subscribe(function (res) { _this.loadChcekboxlist(res, component); });
         return true;
+    };
+    AutoFormComponent.prototype.loadChcekboxlist = function (data, component) {
+        var values = data.json;
+        for (var i = 0; i < values.length; i++) {
+            console.log(values[i]);
+            var option = {
+                label: values[i].descripcion,
+                value: values[i].id,
+                check: false
+            };
+            component.instance._options.push(option);
+        }
+        component.instance.createForm();
     };
     AutoFormComponent.prototype.addRadio = function (value) {
         var componentFactory = this.componentFactoryResolver.resolveComponentFactory(__WEBPACK_IMPORTED_MODULE_6__components_auto_radio_auto_radio__["a" /* AutoRadioComponent */]);
@@ -1296,7 +1311,7 @@ var ServicesProvider = (function () {
     function ServicesProvider(http, events) {
         this.http = http;
         this.events = events;
-        this.hardcoded = true;
+        this.hardcoded = false;
         this._SERVICE_BASE = "http://10.10.2.63:8080/api/";
     }
     ServicesProvider.prototype.doPost = function (service, data) {
@@ -1305,17 +1320,23 @@ var ServicesProvider = (function () {
         var url = this._SERVICE_BASE + service;
         return this.http.post(url, data, { headers: headers });
     };
-    ServicesProvider.prototype.doGet = function (service, data) {
+    ServicesProvider.prototype.doGet = function (service, data, absoluteURL) {
+        if (absoluteURL === void 0) { absoluteURL = false; }
         var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["c" /* HttpHeaders */]();
         headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-        var url = this._SERVICE_BASE + service + data;
+        var url;
+        if (absoluteURL)
+            url = service + data;
+        else
+            url = this._SERVICE_BASE + service + data;
         return this.http.get(url, { headers: headers });
     };
     ServicesProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]) === "function" && _b || Object])
     ], ServicesProvider);
     return ServicesProvider;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=services.js.map
@@ -2139,16 +2160,15 @@ var ContainerPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('container', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] }),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewContainerRef */])
     ], ContainerPage.prototype, "container", void 0);
     ContainerPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-container',template:/*ion-inline-start:"D:\git\online\src\pages\container\container.html"*/'<ion-content scrollX="true">\n  <ng-template #container>\n  </ng-template>\n</ion-content>\n'/*ion-inline-end:"D:\git\online\src\pages\container\container.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_services_services__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_services_services__["a" /* ServicesProvider */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* ComponentFactoryResolver */], __WEBPACK_IMPORTED_MODULE_4__providers_services_services__["a" /* ServicesProvider */]])
     ], ContainerPage);
     return ContainerPage;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=container.js.map

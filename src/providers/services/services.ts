@@ -10,7 +10,7 @@ import { Events } from 'ionic-angular';
 */
 @Injectable()
 export class ServicesProvider {
-  public hardcoded:boolean = true;
+  public hardcoded:boolean = false;
 
   public _SERVICE_BASE = "http://10.10.2.63:8080/api/";
 
@@ -27,11 +27,13 @@ export class ServicesProvider {
 
     return this.http.post(url, data, {headers: headers});
   }
-  public doGet(service, data) {
+  public doGet(service, data, absoluteURL = false) {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
 
-    let url = this._SERVICE_BASE + service + data;
+    let url
+    if (absoluteURL) url = service + data;
+    else url = this._SERVICE_BASE + service + data;
 
     return this.http.get(url, {headers: headers});
   }

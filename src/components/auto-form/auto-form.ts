@@ -134,7 +134,7 @@ export class AutoFormComponent {
           break;
         case "CHECKBOXLIST":
 
-          arr = ["id","hidden","enabled","required","txt_required","txt_help","min","max","label"];
+          arr = ["id","hidden","enabled","required","txt_required","txt_help","min","max","label","servicio"];
           result = (this.validateComponent(this.values[i],arr));
 
           if (!result.valid) {
@@ -313,7 +313,7 @@ export class AutoFormComponent {
 
     (<AutoChecklistComponent>component.instance)._hidden      = value.hidden;
     (<AutoChecklistComponent>component.instance)._enabled     = value.enabled;
-    (<AutoChecklistComponent>component.instance)._required    = value.required;
+    (<AutoChecklistComponent>component.instance)._required    = false;
 
     (<AutoChecklistComponent>component.instance)._txt_required= value.txt_required;
     (<AutoChecklistComponent>component.instance)._txt_help    = value.txt_help;
@@ -322,6 +322,8 @@ export class AutoFormComponent {
     (<AutoChecklistComponent>component.instance)._max         = value.max;
 
     (<AutoChecklistComponent>component.instance)._label       = value.label;
+
+    console.log("el texto es:" + value.label)
     /*
     for (let i = 0; i < value.values.length; i++) {
       let option = {
@@ -333,12 +335,30 @@ export class AutoFormComponent {
       (<AutoChecklistComponent>component.instance)._options.push(option);
     }*/
 
-    (<AutoChecklistComponent>component.instance).createForm();
+    //(<AutoChecklistComponent>component.instance).createForm();
 
     // Push the component so that we can keep track of which components are created
     this.components.push(component);
-    console.log("list agregada")
+
+    this.services.doGet(value.servicio,"",true).subscribe(res => { this.loadChcekboxlist(res,component); });
+
     return true;
+  }
+  public loadChcekboxlist(data, component) {
+    let values = data.json
+
+    for (let i = 0; i < values.length; i++) {
+      console.log(values[i])
+      let option = {
+        label:values[i].descripcion,
+        value:values[i].id,
+        check:false
+      };
+
+      (<AutoChecklistComponent>component.instance)._options.push(option);
+    }
+    (<AutoChecklistComponent>component.instance).createForm();
+
   }
   public addRadio(value:any) {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AutoRadioComponent);
